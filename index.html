@@ -38,10 +38,26 @@
   .ic.ativo { background: var(--acento); color: #fff; border-color: var(--acento); }
 
   /* ---------- barra de ferramentas (direita) ---------- */
-  #ferramentas { position: fixed; right: 12px; top: calc(var(--topo) + 12px); z-index: 4; display: flex; flex-direction: column; gap: 6px; padding: 6px; }
+  #ferramentas { position: fixed; right: 12px; top: calc(var(--topo) + 196px); z-index: 4; display: flex; flex-direction: column; gap: 6px; padding: 6px; }
+
+  /* ---------- cubo de vistas (como no Revit) ---------- */
+  #cubo { position: fixed; right: 4px; top: calc(var(--topo) + 2px); width: 150px; z-index: 4; text-align: center; user-select: none; }
+  #cuboCanvas { width: 150px; height: 166px; display: block; touch-action: none; cursor: grab; }
+  #setasCubo button { position: absolute; width: 0; height: 0; padding: 0; border: 7px solid transparent; background: none; cursor: pointer; }
+  #setasCubo .c { left: calc(50% - 7px); top: 27px; border-bottom: 9px solid #8a929c; border-top-width: 0; }
+  #setasCubo .b { left: calc(50% - 7px); top: 113px; border-top: 9px solid #8a929c; border-bottom-width: 0; }
+  #setasCubo .e { left: 27px; top: 68px; border-right: 9px solid #8a929c; border-left-width: 0; }
+  #setasCubo .d { right: 27px; top: 68px; border-left: 9px solid #8a929c; border-right-width: 0; }
+  #setasCubo .c:hover { border-bottom-color: #2f6fd0; } #setasCubo .b:hover { border-top-color: #2f6fd0; }
+  #setasCubo .e:hover { border-right-color: #2f6fd0; } #setasCubo .d:hover { border-left-color: #2f6fd0; }
+  #btnCasa { position: absolute; left: 4px; top: 4px; width: 26px; height: 26px; border-radius: 7px; border: 1px solid var(--linha); background: #ffffffd9; display: grid; place-items: center; padding: 0; cursor: pointer; color: var(--sub); }
+  #btnCasa svg { width: 15px; height: 15px; }
+  #btnCasa:hover { color: var(--acento); border-color: #b9c0c8; }
+  #btnProj { margin-top: -4px; border: 1px solid var(--linha); background: #ffffffd9; border-radius: 10px; padding: 2px 9px; font-size: 11px; color: var(--sub); cursor: pointer; }
+  #btnProj:hover { color: var(--acento); border-color: #b9c0c8; }
 
   /* ---------- coluna de cartões (ferramenta ativa + objeto selecionado) ---------- */
-  #coluna { position: fixed; right: 72px; top: calc(var(--topo) + 12px); width: 330px; z-index: 4; display: flex; flex-direction: column; gap: 10px;
+  #coluna { position: fixed; right: 160px; top: calc(var(--topo) + 12px); width: 330px; z-index: 4; display: flex; flex-direction: column; gap: 10px;
     max-height: calc(100vh - var(--topo) - 24px); overflow: auto; pointer-events: none; }
   #coluna > * { pointer-events: auto; }
   .pcard { padding: 12px 40px 12px 14px; position: relative; }
@@ -163,7 +179,7 @@
   #barraApres { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 18px); transform: translateX(-50%); z-index: 6;
     display: flex; align-items: center; gap: 8px; padding: 8px; }
   #barraApres .nomeV { min-width: 160px; max-width: 52vw; text-align: center; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  body.apresentando #painel, body.apresentando #ferramentas, body.apresentando #coluna, body.apresentando #btnQr, body.apresentando #qrPop { display: none !important; }
+  body.apresentando #painel, body.apresentando #ferramentas, body.apresentando #coluna, body.apresentando #btnQr, body.apresentando #qrPop, body.apresentando #cubo { display: none !important; }
 
   /* ---------- carregamento / boas-vindas ---------- */
   #overlay { position: fixed; inset: 0; display: grid; place-items: center; z-index: 10; background: var(--bg); padding: 24px; }
@@ -183,9 +199,12 @@
 
   /* ---------- celular ---------- */
   @media (max-width: 640px) {
-    #ferramentas { right: 8px; padding: 4px; gap: 4px; }
+    #ferramentas { right: 8px; padding: 4px; gap: 4px; top: calc(var(--topo) + 156px); }
     .ic { width: 36px; height: 36px; }
-    #coluna { left: 10px; right: 60px; width: auto; max-height: 42vh; }
+    #cubo { width: 116px; right: 0; }
+    #cuboCanvas { width: 116px; height: 128px; }
+    #setasCubo .c { top: 20px; } #setasCubo .b { top: 88px; } #setasCubo .e, #setasCubo .d { top: 51px; } #setasCubo .e { left: 20px; } #setasCubo .d { right: 20px; }
+    #coluna { left: 10px; right: 60px; width: auto; max-height: 42vh; top: calc(var(--topo) + 156px); }
     #painel { width: calc(100vw - 76px); left: 10px; }
     .lst { max-height: 24vh; }
     .alca { width: 34px; height: 34px; margin: -17px 0 0 -17px; }
@@ -216,6 +235,13 @@
   <button class="ic" id="tRevelar" hidden title="Revelar ocultos" aria-label="Revelar ocultos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span class="badge" id="nOcultos"></span></button>
   <button class="ic" id="tQuant" title="Quantitativos" aria-label="Quantitativos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01" stroke-width="3" stroke-linecap="round"/></svg></button>
   <button class="ic" id="tTela" title="Tela cheia" aria-label="Tela cheia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg></button>
+</div>
+
+<div id="cubo" hidden>
+  <canvas id="cuboCanvas" title="Clique numa face, aresta ou canto para ver o modelo daquele lado. Arraste para girar."></canvas>
+  <div id="setasCubo" hidden><button class="c" data-s="0,1" title="Face de cima" aria-label="Face de cima"></button><button class="b" data-s="0,-1" title="Face de baixo" aria-label="Face de baixo"></button><button class="e" data-s="-1,0" title="Face da esquerda" aria-label="Face da esquerda"></button><button class="d" data-s="1,0" title="Face da direita" aria-label="Face da direita"></button></div>
+  <button id="btnCasa" title="Vista inicial" aria-label="Vista inicial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg></button>
+  <button id="btnProj">Paralela</button>
 </div>
 
 <div id="coluna">
@@ -268,7 +294,6 @@
       <div class="editorV"><button class="link" id="btnEditor" hidden>Editar vistas do projeto</button><span id="msgEditor" role="status"></span></div>
     </div>
     <div class="rodape">
-      <button class="bt" id="btnEnq">Enquadrar</button>
       <button class="bt" id="btnTudo">Mostrar tudo</button>
       <button class="bt prim" id="btnApresentar" hidden>Apresentar</button>
       <select id="selCor" aria-label="Cores">
@@ -305,6 +330,6 @@
   <label class="arquivo">Abrir arquivo<input id="arquivo" type="file" accept=".ifc,.ifczip,.zip"></label>
 </div></div>
 
-<script type="module" src="app.js"></script>
+<script type="module" src="app.js?v=2026-10-07.2059"></script>
 </body>
 </html>
