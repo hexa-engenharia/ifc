@@ -87,7 +87,15 @@
   .rodape select { border: 1px solid var(--linha); border-radius: 9px; padding: 7px 8px; font: inherit; font-size: 13px; background: #fff; flex: 1 1 100%; min-width: 0; }
   .novaVista { display: flex; gap: 6px; padding: 6px 12px 0; }
   .novaVista input { flex: 1; min-width: 0; border: 1px solid var(--linha); border-radius: 9px; padding: 7px 9px; font: inherit; font-size: 13px; }
-  #painel.isolando .lst { opacity: .45; pointer-events: none; }
+  .grupoV { display: flex; align-items: baseline; gap: 8px; padding: 6px 12px 2px; font-size: 11px; font-weight: 700; color: var(--sub); text-transform: uppercase; letter-spacing: .04em; }
+  .grupoV small { text-transform: none; letter-spacing: 0; font-weight: 500; }
+  .grupoV .tag { background: #fbe9ea; color: var(--acento); border-radius: 8px; padding: 1px 7px; text-transform: none; letter-spacing: 0; }
+  .lst .mov { border: 0; background: none; color: var(--sub); cursor: pointer; font-size: 15px; padding: 2px 6px; }
+  .editorV { padding: 6px 12px 0; font-size: 12px; color: var(--sub); }
+  .editorV .link { border: 0; background: none; padding: 0; color: var(--sub); text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; font-size: 12px; }
+  body.editando .editorV .link { color: var(--acento); font-weight: 600; }
+  #msgEditor { display: block; margin-top: 3px; } #msgEditor:empty { display: none; } #msgEditor.erro { color: var(--acento); }
+  #painel.isolando #lstDisc, #painel.isolando #lstTipos { opacity: .45; pointer-events: none; }   /* vistas continuam clicáveis */
   .lst .rx { display: none; border: 0; background: none; width: 30px; height: 30px; border-radius: 8px; color: #9aa1aa; cursor: pointer; padding: 0; place-items: center; flex: none; }
   .lst .rx svg { width: 18px; height: 18px; }
   body.rx-aberto .lst .rx, .lst .rx.on { display: inline-grid; }
@@ -250,8 +258,14 @@
     <ul class="lst" id="lstDisc"></ul>
     <ul class="lst" id="lstTipos" hidden></ul>
     <div id="abaVistas" hidden>
+      <div id="grpProjeto" hidden>
+        <div class="grupoV"><span>Vistas do projeto</span><span class="tag" id="tagEditor" hidden>editando</span></div>
+        <ul class="lst" id="lstProjeto"></ul>
+      </div>
+      <div class="grupoV" id="titMinhas" hidden><span>Minhas vistas</span><small>só neste aparelho</small></div>
       <ul class="lst" id="lstVistas"></ul>
       <div class="novaVista"><input id="nomeVista" placeholder="Nome da vista" maxlength="40"><button class="bt" id="btnSalvarVista">Salvar</button></div>
+      <div class="editorV"><button class="link" id="btnEditor" hidden>Editar vistas do projeto</button><span id="msgEditor" role="status"></span></div>
     </div>
     <div class="rodape">
       <button class="bt" id="btnEnq">Enquadrar</button>
