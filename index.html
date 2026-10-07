@@ -88,6 +88,32 @@
   .novaVista { display: flex; gap: 6px; padding: 6px 12px 0; }
   .novaVista input { flex: 1; min-width: 0; border: 1px solid var(--linha); border-radius: 9px; padding: 7px 9px; font: inherit; font-size: 13px; }
   #painel.isolando .lst { opacity: .45; pointer-events: none; }
+  .lst .rx { display: none; border: 0; background: none; width: 30px; height: 30px; border-radius: 8px; color: #9aa1aa; cursor: pointer; padding: 0; place-items: center; flex: none; }
+  .lst .rx svg { width: 18px; height: 18px; }
+  body.rx-aberto .lst .rx, .lst .rx.on { display: inline-grid; }
+  .lst .rx.on { color: var(--acento); background: #fbe9ea; }
+
+  /* ---------- raio-X ---------- */
+  .rxIco { display: inline-block; width: 14px; height: 14px; vertical-align: -2px; border-radius: 50%; border: 1.6px solid currentColor; background: linear-gradient(90deg, transparent 50%, currentColor 50%); }
+  .op { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--sub); margin: 4px 0 6px; }
+  .op input { flex: 1; } .op b { min-width: 34px; text-align: right; color: var(--txt); font-weight: 600; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 4px; }
+  .chip { display: inline-flex; align-items: center; gap: 2px; background: #fbe9ea; color: var(--acento); border-radius: 14px; padding: 3px 3px 3px 10px; font-size: 12.5px; font-weight: 600; max-width: 100%; }
+  .chip > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .chip button { border: 0; background: none; cursor: pointer; font-size: 16px; line-height: 1; color: inherit; padding: 0 6px; }
+  .vazioRx { font-size: 12.5px; color: var(--sub); }
+
+  /* ---------- revelar ocultos ---------- */
+  .ic { position: relative; }
+  .badge { position: absolute; top: -5px; right: -5px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: #d0258a; color: #fff; font-size: 10.5px; font-weight: 700; line-height: 17px; text-align: center; }
+  #tRevelar.ativo { background: #d0258a; border-color: #d0258a; }
+  #tRevelar.ativo .badge { background: #fff; color: #d0258a; }
+  body.revelando::after { content: ''; position: fixed; left: 0; right: 0; bottom: 0; top: var(--topo); border: 4px solid #d0258a; pointer-events: none; z-index: 2; }
+  #barraRevelar { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 18px); transform: translateX(-50%); z-index: 6; display: flex; align-items: center; gap: 8px; padding: 8px 8px 8px 14px; border-color: #d0258a; max-width: calc(100vw - 24px); }
+  #barraRevelar .tx { font-size: 13px; color: var(--sub); } #barraRevelar .tx b { color: #d0258a; }
+  #barraRevelar .bt.prim { background: #d0258a; border-color: #d0258a; }
+  #btnOcultar.prim { background: #d0258a; border-color: #d0258a; }
+  body.revelando #painel { display: none; }   /* modo temporário: deixa a tela livre */
 
   /* ---------- QR ---------- */
   #qrPop { position: fixed; top: calc(var(--topo) + 4px); right: 12px; z-index: 6; padding: 12px; width: 200px; text-align: center; background: #fff; }
@@ -155,6 +181,8 @@
     #painel { width: calc(100vw - 76px); left: 10px; }
     .lst { max-height: 24vh; }
     .alca { width: 34px; height: 34px; margin: -17px 0 0 -17px; }
+    #barraRevelar { flex-wrap: wrap; justify-content: center; bottom: calc(env(safe-area-inset-bottom) + 12px); }
+    #barraRevelar .tx { flex: 1 1 100%; text-align: center; }
   }
 </style>
 <script src="config.js"></script>
@@ -176,7 +204,8 @@
   <button class="ic" id="tMulti" title="Seleção múltipla (no computador: Ctrl+clique)" aria-label="Seleção múltipla"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="11" height="11" rx="2"/><path d="M10 21h9a2 2 0 0 0 2-2v-9"/><path d="M17 17v-3"/></svg></button>
   <button class="ic" id="tMedir" title="Medir distância" aria-label="Medir distância"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 17 17 3l4 4L7 21z"/><path d="m8 12 2 2M11 9l2 2M14 6l2 2"/></svg></button>
   <button class="ic" id="tCorte" title="Caixa de corte" aria-label="Caixa de corte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12h18" stroke-dasharray="3 2"/><path d="M6 8V4h12v4M6 16v4h12v-4"/></svg></button>
-  <button class="ic" id="tRaiox" title="Raio-X (transparência)" aria-label="Raio-X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+  <button class="ic" id="tRaiox" title="Raio-X (transparência no que você escolher)" aria-label="Raio-X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+  <button class="ic" id="tRevelar" hidden title="Revelar ocultos" aria-label="Revelar ocultos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span class="badge" id="nOcultos"></span></button>
   <button class="ic" id="tQuant" title="Quantitativos" aria-label="Quantitativos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01" stroke-width="3" stroke-linecap="round"/></svg></button>
   <button class="ic" id="tTela" title="Tela cheia" aria-label="Tela cheia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg></button>
 </div>
@@ -194,10 +223,17 @@
     <p class="dica">Arraste as alças vermelhas para recortar. Ao fechar, a caixa some e o corte continua.</p>
     <div class="linha"><button class="bt" id="btnCorteSel" disabled>Ajustar à seleção</button><button class="bt" id="btnSemCorte">Remover corte</button></div>
   </div>
+  <div id="cRaiox" class="card pcard" hidden><button class="x" data-fecha="raiox" aria-label="Fechar">×</button>
+    <h3>Raio-X</h3>
+    <p class="dica">Fica transparente só o que você escolher: toque em <span class="rxIco"></span> nas disciplinas e nos tipos do painel, ou selecione objetos e use “Raio-X”.</p>
+    <label class="op">Opacidade<input type="range" id="rngOpac" min="5" max="80" value="15" aria-label="Opacidade do raio-X"><b id="txtOpac">15%</b></label>
+    <div id="rxChips" class="chips"></div>
+    <div class="linha"><button class="bt" id="rxResto" disabled title="Selecione objetos primeiro">Tudo menos a seleção</button><button class="bt" id="rxLimpar" hidden>Tirar todo o raio-X</button></div>
+  </div>
   <!-- objeto selecionado -->
   <div id="info" class="card pcard" hidden><button class="x" aria-label="Fechar">×</button><div class="t"></div><div class="s"></div><div class="o"></div>
     <div class="props"></div>
-    <div class="linha acoesInfo"><button class="bt" id="btnEnqSel">Enquadrar</button><button class="bt" id="btnIsolar">Isolar</button><button class="bt" id="btnOcultar">Ocultar</button></div>
+    <div class="linha acoesInfo"><button class="bt" id="btnEnqSel">Enquadrar</button><button class="bt" id="btnIsolar">Isolar</button><button class="bt" id="btnOcultar">Ocultar</button><button class="bt" id="btnRxSel">Raio-X</button></div>
   </div>
 </div>
 
@@ -228,6 +264,11 @@
       </select>
     </div>
   </div>
+</div>
+
+<div id="barraRevelar" class="card" hidden>
+  <span class="tx"><b>Revelando ocultos</b> · toque nos objetos em rosa e em “Desocultar”</span>
+  <button class="bt" id="revTodos">Desocultar todos</button><button class="bt prim" id="revSair">Sair</button>
 </div>
 
 <div id="barraApres" class="card" hidden>
