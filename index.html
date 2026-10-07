@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<title>Visualizador IFC</title>
+<title>HEXA Engenharia · Visualizador IFC</title>
+
 <style>
   :root {
     --bg: #eef0f3; --card: #ffffffee; --txt: #1d2127; --sub: #5d6672; --linha: #d9dde3;
@@ -35,7 +36,6 @@
   #disciplinas input { width: 18px; height: 18px; accent-color: var(--acento); margin: 0; flex: none; }
   .sw { width: 12px; height: 12px; border-radius: 3px; flex: none; }
   .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 550; }
-  .so { border: 1px solid var(--linha); background: #fff; border-radius: 7px; font-size: 12px; padding: 4px 8px; color: var(--sub); cursor: pointer; }
   .acoes { display: flex; gap: 6px; padding: 8px 12px 12px; flex-wrap: wrap; }
   .acoes button, .bt { border: 1px solid var(--linha); background: #fff; color: var(--txt); border-radius: 9px;
     padding: 8px 11px; font: inherit; font-size: 13px; cursor: pointer; }
@@ -44,6 +44,10 @@
     background: var(--card); backdrop-filter: blur(8px); border: 1px solid var(--linha); border-radius: 14px; box-shadow: var(--sombra); padding: 12px 40px 12px 14px; }
   #info .t { font-weight: 650; word-break: break-word; }
   #info .s, #info .o { font-size: 12.5px; color: var(--sub); margin-top: 2px; word-break: break-word; }
+  .acoesInfo { display: flex; gap: 6px; margin-top: 10px; }
+  .acoesInfo button { border: 1px solid var(--linha); background: #fff; color: var(--txt); border-radius: 9px; padding: 7px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+  .acoesInfo button.ativo { background: var(--acento); color: var(--acento-txt); border-color: var(--acento); }
+  #painel.isolando #disciplinas { opacity: .45; pointer-events: none; }
   #info .x { position: absolute; top: 6px; right: 6px; border: 0; background: none; font-size: 20px; color: var(--sub); cursor: pointer; padding: 4px 8px; }
   @media (max-width: 640px) { #info { left: 12px; right: 12px; max-width: none; bottom: auto; top: calc(env(safe-area-inset-top) + 66px); } }
   #overlay { position: fixed; inset: 0; display: grid; place-items: center; z-index: 10; background: var(--bg); padding: 24px; }
@@ -83,12 +87,13 @@
   </div>
 </div>
 
-<div id="info" hidden><button class="x" aria-label="Fechar">×</button><div class="t"></div><div class="s"></div><div class="o"></div></div>
+<div id="info" hidden><button class="x" aria-label="Fechar">×</button><div class="t"></div><div class="s"></div><div class="o"></div>
+  <div class="acoesInfo"><button id="btnEnqSel">Enquadrar</button><button id="btnIsolar">Isolar</button></div></div>
 
 <div id="overlay"><div class="carga"><div id="status">Carregando…</div><div class="trilho"><div id="barra" class="indet"></div></div></div></div>
 
 <div id="boasvindas" hidden><div class="card">
-  <h1>Visualizador IFC</h1>
+  <h1>HEXA Engenharia · Visualizador IFC</h1>
   <p>Abra pelo QR code da prancha ou escolha um arquivo .ifc / .ifczip deste aparelho.</p>
   <label class="arquivo">Abrir arquivo<input id="arquivo" type="file" accept=".ifc,.ifczip,.zip"></label>
 </div></div>
