@@ -98,6 +98,16 @@
   #rotulos { position: fixed; inset: 0; pointer-events: none; z-index: 3; }
   .rot { position: absolute; transform: translate(-50%, -50%); background: #1d2127; color: #fff; font-size: 12px; font-weight: 600; padding: 3px 7px; border-radius: 6px; white-space: nowrap; }
 
+  /* ---------- alças da caixa de corte ---------- */
+  #alcas { position: fixed; inset: 0; pointer-events: none; z-index: 3; }
+  .alca { position: absolute; width: 28px; height: 28px; margin: -14px 0 0 -14px; padding: 0; border-radius: 50%; display: grid; place-items: center;
+    background: var(--acento); color: #fff; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(20, 28, 40, .35);
+    cursor: grab; pointer-events: auto; touch-action: none; transition: transform .12s; }
+  .alca svg { width: 16px; height: 16px; }
+  .alca:hover, .alca.arrastando { transform: scale(1.18); }
+  .alca.arrastando { cursor: grabbing; }
+  body.apresentando #alcas { display: none !important; }
+
   /* ---------- quantitativos ---------- */
   #quant { position: fixed; inset: 0; z-index: 8; background: rgba(20, 28, 40, .35); display: grid; place-items: center; padding: 16px; }
   #quant .card { background: #fff; width: min(760px, 100%); max-height: calc(100vh - 32px); display: flex; flex-direction: column; padding: 0; }
@@ -144,6 +154,7 @@
     #coluna { left: 10px; right: 60px; width: auto; max-height: 42vh; }
     #painel { width: calc(100vw - 76px); left: 10px; }
     .lst { max-height: 24vh; }
+    .alca { width: 34px; height: 34px; margin: -17px 0 0 -17px; }
   }
 </style>
 <script src="config.js"></script>
@@ -151,6 +162,7 @@
 <body>
 <canvas id="c"></canvas>
 <div id="rotulos"></div>
+<div id="alcas" hidden></div>
 
 <header>
   <span id="logo"></span>
@@ -163,7 +175,7 @@
 <div id="ferramentas" class="card" hidden>
   <button class="ic" id="tMulti" title="Seleção múltipla (no computador: Ctrl+clique)" aria-label="Seleção múltipla"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="11" height="11" rx="2"/><path d="M10 21h9a2 2 0 0 0 2-2v-9"/><path d="M17 17v-3"/></svg></button>
   <button class="ic" id="tMedir" title="Medir distância" aria-label="Medir distância"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 17 17 3l4 4L7 21z"/><path d="m8 12 2 2M11 9l2 2M14 6l2 2"/></svg></button>
-  <button class="ic" id="tCorte" title="Corte" aria-label="Corte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12h18" stroke-dasharray="3 2"/><path d="M6 8V4h12v4M6 16v4h12v-4"/></svg></button>
+  <button class="ic" id="tCorte" title="Caixa de corte" aria-label="Caixa de corte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12h18" stroke-dasharray="3 2"/><path d="M6 8V4h12v4M6 16v4h12v-4"/></svg></button>
   <button class="ic" id="tRaiox" title="Raio-X (transparência)" aria-label="Raio-X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
   <button class="ic" id="tQuant" title="Quantitativos" aria-label="Quantitativos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01" stroke-width="3" stroke-linecap="round"/></svg></button>
   <button class="ic" id="tTela" title="Tela cheia" aria-label="Tela cheia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg></button>
@@ -178,10 +190,9 @@
     <button class="bt" id="btnLimparMedidas">Limpar medidas</button>
   </div>
   <div id="cCorte" class="card pcard" hidden><button class="x" data-fecha="corte" aria-label="Fechar">×</button>
-    <h3>Corte</h3>
-    <p class="dica" id="txtCorte">Arraste para cortar o modelo pela altura.</p>
-    <input type="range" id="rngCorte" min="0" max="1000" value="1000" aria-label="Altura do corte">
-    <div class="linha" style="margin-top:8px"><button class="bt" id="btnCorteSel" disabled>Recortar na seleção</button><button class="bt" id="btnSemCorte">Remover corte</button></div>
+    <h3>Caixa de corte</h3>
+    <p class="dica">Arraste as alças vermelhas para recortar. Ao fechar, a caixa some e o corte continua.</p>
+    <div class="linha"><button class="bt" id="btnCorteSel" disabled>Ajustar à seleção</button><button class="bt" id="btnSemCorte">Remover corte</button></div>
   </div>
   <!-- objeto selecionado -->
   <div id="info" class="card pcard" hidden><button class="x" aria-label="Fechar">×</button><div class="t"></div><div class="s"></div><div class="o"></div>
