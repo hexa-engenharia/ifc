@@ -105,7 +105,12 @@ Existem dois tipos de vista:
 
 ### Publicar um modelo
 
-Os modelos são publicados pela extensão do Chrome **Juntar IFC + QR**:
+Os modelos são publicados pela ferramenta **Juntar IFC + QR**, que fica neste mesmo site:
+
+**https://hexa-engenharia.github.io/ifc/app/**
+
+Não é preciso instalar nada: basta abrir o link no **Chrome** ou no **Edge** do computador, e todos usam sempre a última versão. Se quiser, use o ícone **Instalar** da barra de endereço para ter um atalho na área de trabalho. Também existe a extensão do Chrome, com as mesmas funções, mas ela precisa ser atualizada à mão.
+
 
 1. Junte os IFCs das disciplinas. O arquivo unificado é salvo na pasta `NN-IFC UNIFICADO` do projeto.
 2. Publique no Google Drive e gere o QR code (30 mm, com a logo) para a prancha.
@@ -115,7 +120,7 @@ Os modelos são publicados pela extensão do Chrome **Juntar IFC + QR**:
 
 ### Atualizar este site
 
-1. Substitua **`index.html`** e **`app.js`** neste repositório pela versão nova.
+1. Substitua **`index.html`** e **`app.js`** neste repositório pela versão nova. Para atualizar a ferramenta Juntar IFC + QR, substitua a pasta **`app/`** inteira.
    - `web-ifc.wasm` só precisa ser trocado quando a versão do web-ifc mudar.
    - **Nunca substitua o `config.js`**, que tem a chave de acesso ao Google Drive.
 2. Aguarde 1 a 2 minutos para o GitHub Pages publicar.
@@ -129,6 +134,7 @@ Os modelos são publicados pela extensão do Chrome **Juntar IFC + QR**:
 | `app.js` | O visualizador. É gerado pelo build a partir do código-fonte, então não edite este arquivo diretamente. |
 | `web-ifc.wasm` | Leitor de IFC (WebAssembly). |
 | `config.js` | Chave de API do Google Drive, restrita à Drive API e ao domínio deste site. |
+| `app/` | Ferramenta Juntar IFC + QR (juntar, publicar no Drive e gerar o QR). Gerada pelo build: não edite à mão. |
 
 ### Parâmetros do link
 
@@ -137,9 +143,11 @@ Os modelos são publicados pela extensão do Chrome **Juntar IFC + QR**:
 | `?d=<ID>` | Abre o arquivo `.ifc`/`.ifczip` com esse ID no Google Drive (compartilhado como "qualquer pessoa com o link"). |
 | `?u=<URL>` | Abre um `.ifc`/`.ifczip` de um endereço público (o servidor precisa permitir CORS). |
 
-### Login do Google (vistas do projeto)
+### Login do Google (ferramenta e vistas do projeto)
 
-Para o botão **Editar vistas do projeto** funcionar, o Client ID OAuth do projeto no Google Cloud precisa ter `https://hexa-engenharia.github.io` em **Origens JavaScript autorizadas**.
+Para a ferramenta (`app/`) e o botão **Editar vistas do projeto** funcionarem, o Client ID OAuth do projeto no Google Cloud precisa de duas coisas:
+- `https://hexa-engenharia.github.io` em **Origens JavaScript autorizadas**;
+- a tela de consentimento **Em produção**, ou cada pessoa cadastrada como **usuário de teste**.
 
 ---
 
