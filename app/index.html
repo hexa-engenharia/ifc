@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HEXA Engenharia · Modelos IFC</title>
+<meta name="description" content="HEXA Engenharia — juntar modelos IFC, publicar e gerar QR code para visualização 3D.">
+<meta name="theme-color" content="#ffffff">
+<link rel="apple-touch-icon" href="icons/icon192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon32.png">
+<link rel="stylesheet" href="app.css?v=2026-10-09.1316">
+</head>
+<body>
+<header>
+    <div class="marca"><span id="logo"></span><div><b>HEXA ENGENHARIA</b><span class="subm">Modelos IFC · juntar e gerar QR</span></div></div>
+  <nav>
+    <button data-aba="juntar" class="ativa">Juntar e publicar</button>
+    <button data-aba="qr">QR de um link</button>
+      </nav>
+</header>
+
+<main>
+<div id="avisoNav" class="aviso" hidden>Este navegador não permite escolher pastas. Use o <b>Google Chrome</b> ou o <b>Microsoft Edge</b> no computador para salvar direto na pasta do projeto (arrastar arquivos funciona).</div>
+<!-- ===================== JUNTAR E PUBLICAR ===================== -->
+<section id="aba-juntar">
+  <div class="card">
+    <h2><span class="num">1</span>Arquivos IFC</h2>
+    <div id="drop" class="drop">
+      <p>Arraste aqui a <b>pasta do projeto</b> ou os arquivos <b>.ifc</b> — cada arquivo arrastado é <b>adicionado</b> à lista. Com um arquivo só, ele vai direto para publicar e gerar o QR.</p>
+      <div class="linha">
+        <button id="btnPasta" class="prim">Escolher pasta do projeto</button>
+        <button id="btnArquivos">Escolher arquivos</button>
+      </div>
+      <input type="file" id="inpArquivos" multiple accept=".ifc,.ifczip" hidden>
+    </div>
+    <div class="origem"><p id="origem" class="sub"></p><button id="btnLimpar" class="peq" hidden>Limpar lista</button></div>
+    <table id="tabela" hidden>
+      <thead><tr><th></th><th>Disciplina</th><th>Arquivo</th><th class="dir">Tamanho</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p class="dica" id="dicaPasta" hidden>Pastas OBSOLETO/OLD/BACKUP e a pasta do IFC unificado são ignoradas. Revisões antigas da mesma disciplina vêm desmarcadas.</p>
+  </div>
+
+  <div class="card" id="card2">
+    <h2><span class="num">2</span><span id="tit2">Juntar</span></h2>
+    <div class="linha">
+      <label class="campo cresce" id="lblNome">Nome do arquivo unificado<input id="nomeSaida" spellcheck="false"></label>
+      <button id="btnJuntar" class="prim" disabled>Juntar</button>
+    </div>
+    <div id="prog2" class="prog" hidden><div class="trilho"><div class="barra indet"></div></div><span></span></div>
+    <div id="resultado" hidden>
+      <div id="alertas"></div>
+      <table id="tabRes"><thead><tr><th>Disciplina</th><th class="dir">Elementos</th><th>Unidade original</th><th>Posição</th></tr></thead><tbody></tbody></table>
+      <p id="resumo" class="sub"></p>
+      <div class="linha">
+        <button id="btnSalvar" class="prim">Salvar na pasta do projeto</button>
+        <button id="btnBaixarIfc">Baixar .ifc</button>
+        <button id="btnBaixarZip">Baixar .ifczip</button>
+      </div>
+      <p id="msgSalvar" class="sub"></p>
+      <div id="pastaAntiga" class="aviso" hidden></div>
+    </div>
+  </div>
+
+  <div class="card" id="card3">
+    <h2><span class="num">3</span>Publicar e gerar QR</h2>
+        <p class="sub">Envia o modelo compactado para o <b>seu</b> Google Drive (link de leitura) e gera o QR que abre o visualizador 3D no celular. Na primeira vez o Google pede para você entrar e autorizar.</p>
+    <div id="destino" class="destino" hidden>
+      <label class="opcao"><input type="radio" name="destino" value="atualizar"><span><b>Atualizar um modelo já publicado</b><span class="sub">o QR já impresso continua valendo — só o modelo é trocado</span></span></label>
+      <div id="boxAtualizar" class="boxatu" hidden>
+        <div id="alvoAtual" class="alvo" hidden></div>
+        <label class="campo">Qual modelo? Cole o link do QR, do visualizador ou do Google Drive — ou solte/cole aqui a imagem do QR
+          <div class="linha"><input id="linkAtualizar" placeholder="https://hexa-engenharia.github.io/ifc/?d=…" autocomplete="off" spellcheck="false"><button id="btnListarPub" type="button">Escolher da lista</button></div>
+        </label>
+        <ul id="listaPub" class="listapub" hidden></ul>
+        <p id="msgAtualizar" class="sub" hidden></p>
+      </div>
+      <label class="opcao"><input type="radio" name="destino" value="novo"><span><b>Publicar como modelo novo</b><span class="sub">gera um QR novo</span></span></label>
+      <p id="avisoNovo" class="aviso" hidden></p>
+    </div>
+    <div class="linha"><button id="btnPublicar" class="prim" disabled>Publicar no Google Drive e gerar QR</button></div>
+    <p id="erroPub" class="erro" hidden></p>
+    <div id="prog3" class="prog" hidden><div class="trilho"><div class="barra indet"></div></div><span></span></div>
+    <div id="qrRes" class="qrres" hidden>
+      <img id="qrImg" alt="QR code">
+      <div class="qrinfo">
+        <label class="campo">Link do visualizador<div class="linha"><input id="qrLink" readonly><button id="btnCopiar">Copiar</button></div></label>
+        <p id="qrDet" class="sub"></p>
+        <div class="linha">
+          <button id="btnQrPasta" class="prim">Salvar QR na pasta do projeto</button>
+          <button id="btnQrBaixar">Baixar QR (PNG)</button>
+          <button id="btnAbrirVis">Abrir visualizador</button>
+        </div>
+        <p id="msgQr" class="sub"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== QR DE UM LINK ===================== -->
+<section id="aba-qr" hidden>
+  <div class="card">
+    <h2>QR code com a logo (30 mm, 1200 dpi)</h2>
+    <div class="linha">
+      <label class="campo cresce">Link<input id="qrSoltoLink" placeholder="https://…" spellcheck="false"></label>
+      <label class="campo curto">Tamanho (mm)<input id="qrSoltoMm" type="number" value="30" min="10" max="200"></label>
+      <button id="btnQrSolto" class="prim">Gerar QR</button>
+    </div>
+    <div id="qrSoltoRes" class="qrres" hidden>
+      <img id="qrSoltoImg" alt="QR code">
+      <div class="qrinfo"><p id="qrSoltoDet" class="sub"></p><div class="linha"><button id="btnQrSoltoBaixar" class="prim">Baixar PNG</button></div></div>
+    </div>
+    <p id="qrSoltoMsg" class="sub"></p>
+  </div>
+</section>
+
+</main>
+<footer>HEXA ENGENHARIA · os arquivos são processados no seu computador; só o modelo publicado vai para o seu Google Drive.<span id="versaoSite"></span></footer>
+<script type="module" src="app.js?v=2026-10-09.1316"></script>
+</body>
+</html>
