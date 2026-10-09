@@ -34,7 +34,7 @@ Ele foi feito para ser aberto pelo **QR code impresso nas pranchas** da HEXA. Vo
 - **Arraste o anel** em volta do cubo para girar só na horizontal. Funciona também para girar a planta vista de cima.
 - **N, S, L, O:** um clique gira até aquele lado, mantendo a inclinação.
 - **Setas:** aparecem nas vistas alinhadas e levam para a face vizinha.
-- **🏠:** volta para a vista inicial.
+- **Casinha:** volta para a vista inicial.
 - **Paralela / Perspectiva:** troca o tipo de câmera. A paralela é o padrão.
 
 Com algum objeto selecionado, o giro é feito em volta dele.
@@ -109,7 +109,7 @@ Os modelos são publicados pela extensão do Chrome **Juntar IFC + QR**:
 
 1. Junte os IFCs das disciplinas. O arquivo unificado é salvo na pasta `NN-IFC UNIFICADO` do projeto.
 2. Publique no Google Drive e gere o QR code (30 mm, com a logo) para a prancha.
-3. Nas revisões, publique de novo pela extensão. O arquivo no Drive é atualizado e **o QR já impresso continua valendo**.
+3. Nas revisões, junte de novo e escolha **Atualizar um modelo já publicado**. O modelo vem marcado sozinho pelo nome do projeto; se não vier, cole o link do QR, solte a imagem do QR ou use **Escolher da lista**. **O QR já impresso continua valendo**.
 
 > Dica de exportação no Revit: para o visualizador mostrar bitola e tamanhos reais, exporte o IFC com **"Exportar conjuntos de propriedades do Revit"** e **"Exportar quantidades base"** marcados.
 
