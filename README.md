@@ -62,6 +62,7 @@ Com algum objeto selecionado, o giro é feito em volta dele.
 | **Raio-X** | Deixa transparente **só o que você escolher**: disciplinas, tipos ou objetos. A opacidade é ajustável. |
 | **Revelar ocultos** | Mostra os objetos ocultos em destaque, estilo Revit, para escolher quais desocultar. |
 | **Quantitativos** | Quantidades por disciplina e tipo, com metros de eletroduto e eletrocalha por bitola. Considera **só o que está na vista**: disciplinas e tipos ligados, sem os ocultos, só os isolados e só o que está dentro do corte. Um trecho cortado entra só com a parte de dentro. Exporta para planilha (CSV). |
+| **Ver em AR** | No celular: mostra o modelo **em tamanho real pela câmera**, no próprio local. Veja a seção abaixo. |
 | **QR code** | Gera o QR do modelo aberto, para copiar o link ou baixar a imagem. |
 | **Tela cheia** | Esconde a barra do navegador. |
 
@@ -82,6 +83,49 @@ Com algum objeto selecionado, o giro é feito em volta dele.
 - Desenhe a base como na área e feche.
 - Depois mova o cursor (no celular, arraste o dedo) para cima e para baixo e clique para fixar a altura.
 - A altura pode ser digitada depois na lista.
+
+---
+
+## Ver em AR (realidade aumentada)
+
+Mostra o projeto **em tamanho real, sobreposto à câmera do celular, no próprio local**. Você anda e aponta, e o modelo fica no lugar. Feito para apresentar ao cliente: a precisão é de alguns centímetros.
+
+O botão (cubo com cantos) só aparece em celular com AR:
+- **Android:** Chrome, em aparelhos com o "Google Play Services para RA".
+- **iPhone:** Safari ou Chrome.
+
+### 1. Preparar (antes de chegar no local, ou lá mesmo)
+
+1. Abra o modelo pelo QR e deixe na tela **só o que quer mostrar** (disciplinas, tipos, ocultos).
+2. Se o modelo for grande, use a **caixa de corte** para ficar só com a área da visita. Se passar do limite, aparece: *"A área é grande demais para o AR no celular…"*.
+3. Toque em **Ver em AR**. O visualizador vai para a vista de cima.
+4. Escolha o **pavimento**. Ele define a altura do piso.
+5. Toque no **ponto A** e no **ponto B** da planta. Escolha dois lugares fáceis de achar no local, como um canto de parede, um pilar ou uma porta, a pelo menos 1 m um do outro.
+6. Os pontos ficam guardados neste celular para este modelo. Na próxima vez já vêm marcados.
+7. Toque em **Continuar**.
+
+### 2a. Android
+
+1. A câmera abre com um **alvo** (anel branco) que segue o chão. Se ele não aparecer, aponte para o chão e mova o celular devagar.
+2. Ponha o alvo **exatamente sobre o ponto A** real e toque na tela. Depois faça o mesmo com o **ponto B**.
+3. O modelo aparece encaixado. Se a distância A–B no local não bater com a do projeto, aparece um aviso: confira os pontos ou toque em **Refazer pontos**.
+4. Ande e aponte. Toque num objeto para ver nome, tipo e bitola.
+5. Use **Ajustar** para corrigir com as setas: mover 5 cm (frente, trás e lados, conforme para onde o celular aponta), girar 1° e subir ou descer 2 cm.
+6. Toque em **Sair** para voltar ao visualizador como estava.
+
+### 2b. iPhone
+
+1. O visualizador prepara o arquivo ("Preparando o modelo para o AR…"), o que leva alguns segundos, e abre o **AR da Apple**. Se não abrir sozinho, toque em **Abrir no AR**.
+2. Aponte para o chão até o modelo aparecer. O **disco vermelho** é o ponto A e o **pino azul** é o ponto B.
+3. Arraste com um dedo para levar o disco vermelho ao ponto A real. Depois gire com dois dedos até o pino azul ficar sobre o ponto B. A escala fica travada em tamanho real.
+4. Para sair, feche o AR da Apple.
+
+### Dicas
+
+- Funciona melhor com boa luz e com piso ou paredes que tenham textura. Piso liso e brilhante e paredes brancas atrapalham.
+- Em áreas grandes o rastreamento pode "escorregar" alguns centímetros. Use **Ajustar** ou refaça os pontos.
+- O modelo aparece por cima de tudo, o que permite "ver dentro da parede".
+- O AR precisa de um IFC em **metros**. Os modelos publicados pela ferramenta já saem assim.
 
 ---
 
@@ -154,7 +198,7 @@ Para a ferramenta (`app/`) e o botão **Editar vistas do projeto** funcionarem, 
 ## Compatibilidade
 
 Funciona em navegadores atuais com WebGL:
-- **Celular:** Chrome e Safari (Android e iPhone).
+- **Celular:** Chrome e Safari (Android e iPhone). **Ver em AR**: Chrome no Android com ARCore; Safari ou Chrome no iPhone.
 - **Computador:** Chrome, Edge, Firefox e Safari.
 
 Modelos muito grandes podem demorar mais para abrir em celulares mais simples.
