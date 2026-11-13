@@ -14,9 +14,24 @@ Ele foi feito para ser aberto pelo **QR code impresso nas pranchas** da HEXA. Vo
 |---|---|
 | **Pelo QR code da prancha** | Aponte a câmera do celular para o QR e toque no link. |
 | **Por um link** | `https://hexa-engenharia.github.io/ifc/?d=<ID do arquivo no Google Drive>` |
-| **Arquivo do seu aparelho** | Abra o site e toque em **Abrir arquivo** (`.ifc`, `.ifczip` ou `.zip`). |
+| **Arquivo do seu aparelho** | Abra o site e arraste o arquivo para a janela, ou toque em **Abrir arquivos** (`.ifc`, `.ifczip` ou `.zip`). Veja [Usar como programa](#usar-como-programa). |
 
 > **Privacidade:** um arquivo aberto do seu aparelho é lido só no seu navegador e não é enviado para lugar nenhum. Os modelos dos QR codes são lidos, somente para leitura, do Google Drive onde a HEXA os publicou.
+
+---
+
+## Usar como programa
+
+Aberto sem link (só `https://hexa-engenharia.github.io/ifc/`), o visualizador funciona como um programa, no estilo do BIMcollab Zoom: você arrasta os arquivos e eles abrem, com todas as ferramentas abaixo. Nada é enviado para a internet nem salvo no Drive.
+
+- **Arrastar** para a janela: um ou vários `.ifc`, um `.ifczip`/`.zip` (com um ou vários IFCs dentro) ou uma **pasta do projeto** inteira. Vários arquivos são juntados na hora, já separados por disciplina (o nome da disciplina vem da pasta ou do código no nome: `04-FORÇA`, `FOR`, `AUT`…).
+- **Pasta do projeto**: entram só os IFCs das disciplinas, na revisão mais nova. Ficam de fora as pastas `OBSOLETO`, `OLD` e `BACKUP`, a pasta do IFC unificado e arquivos `UNIFICADO`.
+- **Com um modelo aberto**, arrastar mais arquivos pergunta: **Juntar com o que está aberto** ou **Abrir só estes**. Ao juntar, uma revisão nova troca a velha da mesma disciplina (aparece "FORÇA: R00 → R01").
+- **Botões**: **Abrir arquivos**, **Abrir pasta** (Chrome e Edge no computador) e, no topo, o ícone de pasta volta para a tela inicial.
+- **Recentes** (Chrome e Edge no computador): os últimos 8 arquivos ou pastas abertos. Ao clicar, o navegador pede permissão para ler de novo; se o arquivo mudou de lugar, ele sai da lista.
+- **Instalar**: o botão **Instalar** da tela inicial (ou o ícone na barra de endereço do Chrome/Edge) cria o **HEXA Visualizador IFC** no menu Iniciar e na área de trabalho. Depois de instalado ele abre em janela própria, funciona **sem internet** e aparece em **Abrir com** ao clicar com o botão direito num `.ifc` (dá para abrir vários de uma vez).
+- **Minhas vistas** ficam guardadas pelo nome do modelo aberto.
+- Num link de QR (`?d=`), arrastar um arquivo do aparelho troca para ele; as vistas do projeto e o QR daquele link saem da tela.
 
 ---
 
@@ -164,11 +179,11 @@ Não é preciso instalar nada: basta abrir o link no **Chrome** ou no **Edge** d
 
 ### Atualizar este site
 
-1. Substitua **`index.html`** e **`app.js`** neste repositório pela versão nova. Para atualizar a ferramenta Juntar IFC + QR, substitua a pasta **`app/`** inteira.
-   - `web-ifc.wasm` só precisa ser trocado quando a versão do web-ifc mudar.
+1. Substitua **`index.html`**, **`app.js`**, **`juntar.js`** e **`sw.js`** neste repositório pela versão nova (sempre os quatro juntos). Para atualizar a ferramenta Juntar IFC + QR, substitua a pasta **`app/`** inteira.
+   - `web-ifc.wasm` só precisa ser trocado quando a versão do web-ifc mudar; `manifest.webmanifest` e a pasta `icons/`, só quando mudarem.
    - **Nunca substitua o `config.js`**, que tem a chave de acesso ao Google Drive.
 2. Aguarde 1 a 2 minutos para o GitHub Pages publicar.
-3. Para conferir, abra o site e passe o mouse sobre a logo. A versão aparece no formato `AAAA-MM-DD.HHMM`. O `app.js` é carregado com a versão no endereço, então o navegador não reaproveita o app antigo do cache.
+3. Para conferir, abra o site e passe o mouse sobre a logo. A versão aparece no formato `AAAA-MM-DD.HHMM`. O `app.js` é carregado com a versão no endereço, então o navegador não reaproveita o app antigo do cache. Quem instalou o programa recebe a versão nova na próxima vez que abrir com internet.
 
 ### Arquivos
 
@@ -176,6 +191,9 @@ Não é preciso instalar nada: basta abrir o link no **Chrome** ou no **Edge** d
 |---|---|
 | `index.html` | Página do visualizador (layout e estilos). |
 | `app.js` | O visualizador. É gerado pelo build a partir do código-fonte, então não edite este arquivo diretamente. |
+| `juntar.js` | Junta vários IFCs no navegador quando o visualizador é usado como programa. Gerado pelo build. |
+| `sw.js` | Faz o programa instalado abrir sem internet. Gerado pelo build. |
+| `manifest.webmanifest`, `icons/` | Nome, ícone e tipos de arquivo do programa instalado (HEXA Visualizador IFC). |
 | `web-ifc.wasm` | Leitor de IFC (WebAssembly). |
 | `config.js` | Chave de API do Google Drive, restrita à Drive API e ao domínio deste site. |
 | `app/` | Ferramenta Juntar IFC + QR (juntar, publicar no Drive e gerar o QR). Gerada pelo build: não edite à mão. |
@@ -199,7 +217,7 @@ Para a ferramenta (`app/`) e o botão **Editar vistas do projeto** funcionarem, 
 
 Funciona em navegadores atuais com WebGL:
 - **Celular:** Chrome e Safari (Android e iPhone). **Ver em AR**: Chrome no Android com ARCore; Safari ou Chrome no iPhone.
-- **Computador:** Chrome, Edge, Firefox e Safari.
+- **Computador:** Chrome, Edge, Firefox e Safari. **Instalar como programa**, **Abrir pasta**, **Recentes** e abrir pelo duplo clique: Chrome e Edge.
 
 Modelos muito grandes podem demorar mais para abrir em celulares mais simples.
 
