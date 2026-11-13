@@ -31,6 +31,7 @@ Aberto sem link (só `https://hexa-engenharia.github.io/ifc/`), o visualizador f
 - **Recentes** (Chrome e Edge no computador): os últimos 8 arquivos ou pastas abertos. Ao clicar, o navegador pede permissão para ler de novo; se o arquivo mudou de lugar, ele sai da lista.
 - **Instalar**: o botão **Instalar** da tela inicial (ou o ícone na barra de endereço do Chrome/Edge) cria o **HEXA Visualizador IFC** no menu Iniciar e na área de trabalho. Depois de instalado ele abre em janela própria, funciona **sem internet** e aparece em **Abrir com** ao clicar com o botão direito num `.ifc` (dá para abrir vários de uma vez).
 - **Publicar / gerar QR** (ícone de QR no topo, Chrome e Edge no computador): abre a ferramenta Juntar IFC + QR numa aba nova já com os arquivos abertos e, se você abriu uma pasta, com ela como pasta do projeto. Lá é só Juntar › Salvar na pasta › Publicar › QR. Se nada abrir, permita pop-ups para este site.
+- **Ir para a ferramenta**: na tela inicial, o link **Juntar e publicar IFC · gerar QR** abre a ferramenta; lá, **Visualizador** (no topo) volta para cá.
 - **Minhas vistas** ficam guardadas pelo nome do modelo aberto.
 - Num link de QR (`?d=`), arrastar um arquivo do aparelho troca para ele; as vistas do projeto e o QR daquele link saem da tela.
 
