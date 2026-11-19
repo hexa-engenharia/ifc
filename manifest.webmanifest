@@ -1,7 +1,7 @@
 {
-  "name": "HEXA Visualizador IFC",
-  "short_name": "HEXA Visualizador",
-  "description": "Abra modelos IFC do computador: arraste os arquivos (um, vários ou a pasta do projeto) e veja o 3D. Nada é enviado.",
+  "name": "HEXA-IFC",
+  "short_name": "HEXA-IFC",
+  "description": "Unificar, visualizar e separar modelos IFC no computador: arraste os arquivos (um, vários ou a pasta do projeto). Nada é enviado.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

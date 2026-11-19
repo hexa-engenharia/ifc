@@ -110,3 +110,25 @@ button.rem:hover { background: var(--er-bg); color: var(--er); }
 main > .aviso { margin: 0 0 16px; }
 footer { text-align: center; color: var(--sub); font-size: 12px; padding: 0 16px 28px; }
 @media (max-width: 640px) { header { padding: 10px 14px; } nav button, nav a { padding: 7px 9px; } }
+
+/* passos do Unificar (aparecem conforme vão sendo liberados) */
+.passos { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; padding: 0 4px; font-weight: 600; font-size: 13px; color: #9aa1ab; }
+.passos .p { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.passos .p i { font-style: normal; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; border: 2px solid #c9cfd6; font-size: 12px; }
+.passos .p.feito { color: var(--ok); } .passos .p.feito i { background: var(--ok); border-color: var(--ok); color: #fff; }
+.passos .p.atual { color: var(--acento); } .passos .p.atual i { background: var(--acento); border-color: var(--acento); color: #fff; }
+.passos .l { flex: 1; height: 2px; background: #d9dde3; } .passos .l.feito { background: var(--ok); }
+.resumo { display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid var(--linha); border-radius: var(--raio); padding: 12px 18px; margin-bottom: 16px; }
+.resumo .v { width: 26px; height: 26px; border-radius: 50%; background: var(--ok); color: #fff; display: grid; place-items: center; font-weight: 700; flex: none; }
+.resumo b { display: block; } .resumo .sub { margin: 0; display: block; }
+.resumo a { margin-left: auto; color: var(--acento); font-weight: 600; text-decoration: none; }
+.card.novo { box-shadow: 0 0 0 3px #fbe9ea; }
+button.icone { width: 40px; height: 40px; padding: 0; display: grid; place-items: center; border-radius: 10px; }
+/* QR de um link: cartão flutuante */
+.flutua { position: fixed; inset: 0; z-index: 20; background: rgba(20, 28, 40, .25); display: grid; place-items: start center; padding: 80px 16px 16px; }
+.flutua .card { width: min(720px, 100%); box-shadow: 0 10px 40px rgba(20, 28, 40, .25); }
+.flutua h2 { justify-content: flex-start; } .flutua .sub2 { font-weight: 400; font-size: 12.5px; color: var(--sub); }
+.flutua .x { margin-left: auto; border: 0; font-size: 22px; line-height: 1; padding: 2px 8px; color: var(--sub); }
+/* dentro do HEXA-IFC (iframe): o cabeçalho é o da página de fora */
+body.embutido header { display: none; } body.embutido main { padding-top: 24px; }
+@media (max-width: 640px) { .passos { font-size: 11.5px; gap: 6px; } .passos .p { gap: 5px; } }

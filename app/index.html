@@ -9,23 +9,29 @@
 <link rel="apple-touch-icon" href="icons/icon192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon32.png">
-<link rel="stylesheet" href="app.css?v=2026-11-13.1300">
+<link rel="stylesheet" href="app.css?v=2026-11-19.2030">
 </head>
 <body>
 <header>
-    <div class="marca"><span id="logo"></span><div><b>HEXA ENGENHARIA</b><span class="subm">Modelos IFC · juntar e gerar QR</span></div></div>
+    <div class="marca"><span id="logo"></span><div><b>HEXA ENGENHARIA</b><span class="subm">Modelos IFC · unificar e gerar QR</span></div></div>
   <nav>
-    <button data-aba="juntar" class="ativa">Juntar e publicar</button>
-    <button data-aba="qr">QR de um link</button>
+    <button data-aba="juntar" class="ativa">Unificar e publicar</button>
         <a id="irVisualizador" href="../" title="Abrir o visualizador IFC">Visualizador <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
   </nav>
+  <button id="btnQrIcone" class="icone" type="button" title="QR de um link" aria-label="QR de um link"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm11-2h2v2h-2v-2zm-3 0h2v3h-2v-3zm5 3h3v2h-3v-2zm-5 2h3v3h-3v-3zm5 1h2v2h-2v-2zm-2 2h2v2h-2v-2z"/></svg></button>
 </header>
 
 <main>
 <div id="avisoNav" class="aviso" hidden>Este navegador não permite escolher pastas. Use o <b>Google Chrome</b> ou o <b>Microsoft Edge</b> no computador para salvar direto na pasta do projeto (arrastar arquivos funciona).</div>
 <!-- ===================== JUNTAR E PUBLICAR ===================== -->
 <section id="aba-juntar">
-  <div class="card">
+  <div id="passos" class="passos" aria-label="Passos">
+    <span class="p atual"><i>1</i>Arquivos</span><span class="l"></span>
+    <span class="p"><i>2</i>Unificar</span><span class="l"></span>
+    <span class="p"><i>3</i>Publicar e gerar QR</span>
+  </div>
+  <div id="resumo1" class="resumo" hidden><span class="v">✓</span><div><b id="resumo1t"></b><span id="resumo1s" class="sub"></span></div><a href="#" id="alterar1">alterar</a></div>
+  <div class="card" id="card1">
     <h2><span class="num">1</span>Arquivos IFC</h2>
     <div id="drop" class="drop">
       <p>Arraste aqui a <b>pasta do projeto</b> ou os arquivos <b>.ifc</b> — cada arquivo arrastado é <b>adicionado</b> à lista. Com um arquivo só, ele vai direto para publicar e gerar o QR.</p>
@@ -43,11 +49,11 @@
     <p class="dica" id="dicaPasta" hidden>Pastas OBSOLETO/OLD/BACKUP e a pasta do IFC unificado são ignoradas. Revisões antigas da mesma disciplina vêm desmarcadas.</p>
   </div>
 
-  <div class="card" id="card2">
-    <h2><span class="num">2</span><span id="tit2">Juntar</span></h2>
+  <div class="card" id="card2" hidden>
+    <h2><span class="num">2</span><span id="tit2">Unificar</span></h2>
     <div class="linha">
       <label class="campo cresce" id="lblNome">Nome do arquivo unificado<input id="nomeSaida" spellcheck="false"></label>
-      <button id="btnJuntar" class="prim" disabled>Juntar</button>
+      <button id="btnJuntar" class="prim" disabled>Unificar</button>
     </div>
     <div id="prog2" class="prog" hidden><div class="trilho"><div class="barra indet"></div></div><span></span></div>
     <div id="resultado" hidden>
@@ -64,7 +70,7 @@
     </div>
   </div>
 
-  <div class="card" id="card3">
+  <div class="card" id="card3" hidden>
     <h2><span class="num">3</span>Publicar e gerar QR</h2>
         <p class="sub">Envia o modelo compactado para o <b>seu</b> Google Drive (link de leitura) e gera o QR que abre o visualizador 3D no celular. Na primeira vez o Google pede para você entrar e autorizar.</p>
     <div id="destino" class="destino" hidden>
@@ -100,9 +106,9 @@
 </section>
 
 <!-- ===================== QR DE UM LINK ===================== -->
-<section id="aba-qr" hidden>
+<section id="aba-qr" class="flutua" hidden>
   <div class="card">
-    <h2>QR code com a logo (30 mm, 1200 dpi)</h2>
+    <h2>QR de um link <span class="sub2">com a logo, 30 mm, 1200 dpi</span><button id="fecharQr" class="x" type="button" title="Fechar" aria-label="Fechar">×</button></h2>
     <div class="linha">
       <label class="campo cresce">Link<input id="qrSoltoLink" placeholder="https://…" spellcheck="false"></label>
       <label class="campo curto">Tamanho (mm)<input id="qrSoltoMm" type="number" value="30" min="10" max="200"></label>
@@ -118,6 +124,6 @@
 
 </main>
 <footer>HEXA ENGENHARIA · os arquivos são processados no seu computador; só o modelo publicado vai para o seu Google Drive.<span id="versaoSite"></span></footer>
-<script type="module" src="app.js?v=2026-11-13.1300"></script>
+<script type="module" src="app.js?v=2026-11-19.2030"></script>
 </body>
 </html>

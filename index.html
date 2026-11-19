@@ -235,26 +235,34 @@
   /* ---------- carregamento / boas-vindas ---------- */
   #overlay { position: fixed; inset: 0; display: grid; place-items: center; z-index: 10; background: var(--bg); padding: 24px; }
   .carga { width: min(360px, 100%); text-align: center; }
+  #btCancelar { margin-top: 14px; }
+  .bvLimpar { border: 0; background: none; color: var(--sub); text-decoration: underline; cursor: pointer; font: inherit; padding: 0 2px; }
   #status { color: var(--sub); margin-bottom: 12px; min-height: 2.6em; }
   .trilho { height: 6px; background: #dfe3e8; border-radius: 6px; overflow: hidden; }
   #barra { height: 100%; width: 0; background: var(--acento); transition: width .2s; }
   #barra.indet { width: 35%; animation: vai 1.1s ease-in-out infinite; }
   @keyframes vai { 0% { transform: translateX(-100%); } 100% { transform: translateX(290%); } }
   #overlay.erro #status { color: var(--acento); font-weight: 600; }
-  #boasvindas { position: fixed; inset: 0; display: grid; place-items: center; z-index: 6; padding: 24px; overflow: auto; }
-  #boasvindas .card { background: #fff; padding: 24px; width: min(520px, 100%); text-align: center; position: relative; }
-  body.comModelo #boasvindas { background: rgba(238, 240, 243, .82); backdrop-filter: blur(3px); z-index: 20; }
-  #boasvindas .bvLogo { display: flex; justify-content: center; margin-bottom: 8px; }
-  #boasvindas h1 { font-size: 19px; margin: 0; }
-  #boasvindas .bvSub { color: var(--sub); font-size: 13px; margin: 2px 0 16px; }
-  .areaSoltar { border: 2px dashed #c9cfd6; border-radius: 14px; padding: 26px 16px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--sub); cursor: pointer; margin-bottom: 14px; }
+  /* ---------- HEXA-IFC: tela principal (três cartões) ---------- */
+  #boasvindas { position: fixed; inset: var(--topo) 0 0 0; display: grid; place-items: center; z-index: 6; padding: 24px 16px; overflow: auto; background: var(--bg); }
+  body.comModelo #boasvindas { background: rgba(238, 240, 243, .86); backdrop-filter: blur(3px); z-index: 20; }
+  .inicio { width: min(1100px, 100%); display: flex; flex-direction: column; align-items: center; gap: 22px; position: relative; }
+  .inicio > .x { position: absolute; right: 0; top: 0; }
+  .ola { text-align: center; } .ola h1 { margin: 0; font-size: 25px; } .ola p { margin: 4px 0 0; color: var(--sub); }
+  .cartoes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; width: 100%; }
+  .cartao { background: #fff; border: 1px solid var(--linha); border-radius: 16px; box-shadow: var(--sombra); padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+  .cartao .ic { width: 52px; height: 52px; border-radius: 14px; background: #fbe9ea; color: var(--acento); display: grid; place-items: center; }
+  .cartao .ic svg { width: 28px; height: 28px; }
+  .cartao h2 { margin: 4px 0 0; font-size: 17px; letter-spacing: .02em; }
+  .cartao p { margin: 0; color: var(--sub); font-size: 13.5px; flex: 1; }
+  .cartao .bt { padding: 10px 14px; font-size: 14px; } .cartao > .bt, .cartao .linha .bt.prim { flex: 1; }
+  .cartao .linha { margin: 0; }
+  .cartao.sobre { border-color: var(--acento); box-shadow: 0 0 0 3px #fbe9ea; }
+  .areaSoltar { border: 2px dashed #c9cfd6; border-radius: 12px; padding: 18px 12px; display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--sub); cursor: pointer; text-align: center; }
   .areaSoltar:hover { border-color: var(--acento); color: var(--txt); }
-  .areaSoltar svg { width: 38px; height: 38px; color: var(--acento); margin-bottom: 4px; }
-  .areaSoltar b { color: var(--txt); font-size: 15px; }
-  .areaSoltar span { font-size: 12.5px; }
-  #boasvindas .linha { justify-content: center; }
-  #boasvindas .bt { padding: 9px 14px; font-size: 14px; }
-  #recentes { text-align: left; margin-top: 18px; }
+  .areaSoltar b { color: var(--txt); font-size: 14px; }
+  .areaSoltar span { font-size: 12px; }
+  #recentes { width: 100%; background: #fff; border: 1px solid var(--linha); border-radius: 14px; padding: 12px 18px; }
   #recentes h2 { font-size: 13px; color: var(--sub); font-weight: 600; margin: 0 0 6px; text-transform: uppercase; letter-spacing: .04em; }
   #recentes ul { list-style: none; margin: 0; padding: 0; }
   #recentes li { display: flex; align-items: center; gap: 6px; border-top: 1px solid var(--linha); }
@@ -263,10 +271,115 @@
   #recentes li .n { display: block; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   #recentes li .q { display: block; font-size: 12px; color: var(--sub); }
   #recentes li .tira { border: 0; background: none; color: var(--sub); font-size: 18px; cursor: pointer; padding: 4px 8px; }
-  #boasvindas .bvNota { font-size: 12px; color: var(--sub); margin: 16px 0 0; }
-  #boasvindas .bvLink { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--linha); width: 100%; justify-content: center;
-    color: var(--acento); font-weight: 600; font-size: 13.5px; text-decoration: none; }
-  #boasvindas .bvLink:hover { text-decoration: underline; }
+  #cMedicao { position: fixed; right: 12px; bottom: 12px; z-index: 30; padding: 8px 12px; font-size: 12px; min-width: 180px; }
+  #cMedicao table { border-collapse: collapse; width: 100%; margin-top: 4px; } #cMedicao td { padding: 1px 0; } #cMedicao td + td { text-align: right; padding-left: 12px; font-variant-numeric: tabular-nums; }
+  /* Abrir leve: o que ficou de fora, com uma etiqueta por grupo para carregar depois */
+  #avisoLeve { position: fixed; top: 60px; left: 50%; transform: translateX(-50%); z-index: 8; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 8px 12px; font-size: 13px; max-width: min(760px, calc(100vw - 32px)); }
+  #avisoLeve .sub { color: var(--sub, #667); }
+  #avisoLeve .chip { border: 1px solid var(--linha); background: transparent; border-radius: 999px; padding: 3px 10px; font: inherit; cursor: pointer; color: inherit; }
+  #avisoLeve .chip span { opacity: .6; margin-left: 2px; font-variant-numeric: tabular-nums; }
+  #avisoLeve .chip:hover { border-color: currentColor; }
+  #avisoLeve .bt { margin-left: 4px; }
+  #cMedicao .tot td { border-top: 1px solid var(--linha); font-weight: 600; }
+  #boasvindas .bvNota { font-size: 12px; color: var(--sub); margin: 0; text-align: center; }
+  #boasvindas .bvNota .bt { padding: 4px 10px; font-size: 12px; }
+  /* barra UNIFICAR | VISUALIZADOR | SEPARAR (só no programa; a página do QR fica como sempre) */
+  .hxMarca, #funcoes, #hxQr { display: none; }
+  body.hx .hxMarca { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; margin-right: auto; }
+  body.hx .hxMarca b { font-size: 16px; letter-spacing: .02em; } body.hx .hxMarca span { font-size: 10.5px; color: var(--sub); letter-spacing: .06em; }
+  body.hx .tit { display: none; } body.hx[data-aba=visualizador].temModelo .tit { display: block; } body.hx[data-aba=visualizador].temModelo .hxMarca { display: none; }
+  body.hx #funcoes { display: flex; position: absolute; left: 50%; transform: translateX(-50%); gap: 4px; background: #f2f3f5; border: 1px solid #e3e6ea; border-radius: 12px; padding: 3px; }
+  #funcoes a { display: flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 9px; font-size: 13px; font-weight: 700; letter-spacing: .03em; color: var(--sub); text-decoration: none; white-space: nowrap; }
+  #funcoes a svg { width: 18px; height: 18px; } #funcoes a.on { background: #fff; color: var(--acento); box-shadow: 0 1px 4px rgba(20, 28, 40, .12); }
+  body.hx:not([data-aba=visualizador]) header > button.ic { display: none !important; }
+  body.hx[data-aba=unificar] #hxQr { display: grid !important; margin-left: auto; }
+  body.hx[data-aba=unificar] :is(#c, #rotulos, #alcas, #qrPop, #ferramentas, #cubo, #coluna, #painel, #barraRevelar, #barraApres, #quant, #cMedicao, #avisoLeve),
+  body.hx[data-aba=separar] :is(#rotulos, #alcas, #qrPop, #ferramentas, #coluna, #painel, #barraRevelar, #barraApres, #quant, #cMedicao, #avisoLeve, #info) { display: none !important; }
+  .aba { position: fixed; inset: var(--topo) 0 0 0; z-index: 4; background: var(--bg); }
+  #ifUnificar { width: 100%; height: 100%; border: 0; display: block; background: #f3f4f6; }
+  .emBreve { display: grid; place-items: center; height: 100%; color: var(--sub); text-align: center; }
+  /* SEPARAR IFC: painel à esquerda; à direita, a prévia 3D do modelo limpo (o próprio visualizador, sem as ferramentas) */
+  :root { --sepW: min(640px, calc(100vw - 32px)); }
+  #abaSeparar { overflow: hidden; }
+  #abaSeparar.comPrevia { background: transparent; pointer-events: none; }
+  #abaSeparar.comPrevia > * { pointer-events: auto; }
+  body.hx[data-aba=separar] #c { left: calc(var(--sepW) + 32px); width: calc(100% - var(--sepW) - 32px); }
+  body.hx[data-aba=separar] #overlay { left: calc(var(--sepW) + 32px); }
+  body.hx[data-aba=separar] #btCancelar { display: none !important; }
+  body.hx[data-aba=separar]:not(.sepPrevia) #cubo { display: none !important; }
+  #sepClique { position: absolute; bottom: 24px; left: calc(var(--sepW) + 32px + (100% - var(--sepW) - 32px) / 2); transform: translateX(-50%); padding: 8px 16px; font-size: 13.5px; color: var(--sub); white-space: nowrap; display: none; }
+  #abaSeparar.comPrevia #sepClique { display: block; }
+  #painelSeparar { position: absolute; left: 16px; top: 16px; bottom: 16px; width: var(--sepW); display: flex; flex-direction: column; padding: 0; overflow: hidden; background: #fff; }
+  #painelSeparar.semArquivo { bottom: auto; }
+  .sepTopo { padding: 16px 20px 10px; border-bottom: 1px solid var(--linha); }
+  .sepTopo h2 { margin: 0; font-size: 20px; } .sepTopo p { margin: 4px 0 0; color: var(--sub); font-size: 13px; }
+  #sepAbas { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 20px 4px; }
+  .sepAba { position: relative; display: flex; flex-direction: column; border: 1px solid var(--linha); border-radius: 10px; padding: 6px 26px 6px 12px; cursor: pointer; min-width: 0; max-width: 240px; background: #fff; }
+  .sepAba .n { font-weight: 650; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .sepAba .e { font-size: 12px; color: var(--sub); }
+  .sepAba.on { border-color: var(--acento); background: #fdf1f1; } .sepAba.on .n, .sepAba.on .e { color: var(--acento); }
+  .sepAba.erro .e { color: var(--acento); }
+  .sepAba .x { top: 2px; right: 2px; font-size: 15px; padding: 2px 6px; }
+  .sepMais { border: 1px dashed #b9c0c8; border-radius: 10px; background: none; color: var(--sub); padding: 6px 14px; cursor: pointer; font: inherit; font-size: 13px; }
+  .sepMais:hover { color: var(--acento); border-color: var(--acento); }
+  #sepVazio { margin: 12px 20px 20px; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 26px 16px; }
+  #sepVazio span { font-size: 12.5px; color: var(--sub); } #sepVazio .bt { margin-top: 6px; }
+  .sepLendo { padding: 18px 20px; color: var(--sub); font-size: 14px; }
+  .gira { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--linha); border-top-color: var(--acento); border-radius: 50%; animation: gira .8s linear infinite; vertical-align: -2px; margin-right: 6px; }
+  @keyframes gira { to { transform: rotate(360deg); } }
+  #sepCorpo { flex: 1; overflow: auto; padding: 4px 20px 12px; }
+  .sepSec { display: flex; align-items: baseline; justify-content: space-between; margin: 12px 0 6px; }
+  .sepSec h3 { margin: 0; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--sub); font-weight: 650; }
+  .link { border: 0; background: none; color: var(--acento); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; padding: 2px 4px; }
+  .sepLimpeza { border: 1px solid var(--linha); border-radius: 10px; padding: 10px 14px; background: #fafbfc; font-size: 13.5px; }
+  .sepLimpeza p { margin: 0; } .sepLimpeza .tot { font-size: 14.5px; margin-bottom: 6px; }
+  .sepLimpeza .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 8px; }
+  .sepLimpeza .chip { border: 1px solid var(--linha); background: #fff; color: var(--txt); border-radius: 999px; padding: 2px 10px; font-size: 12.5px; font-weight: 400; }
+  .sepLimpeza .chip b { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .sepLimpeza .malhas { color: var(--sub); font-size: 12.5px; }
+  .sepLimpeza .avisos { margin: 6px 0 0; padding-left: 18px; color: #8a5a00; font-size: 12px; }
+  .sepOpcoes { border: 1px solid var(--linha); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; }
+  .sepOpcoes .manter { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 4px 12px; margin-bottom: 10px; }
+  .sepOpcoes .opc { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+  .sepOpcoes input:not([type]), .sepOpcoes input[type=number] { font: inherit; padding: 5px 8px; border: 1px solid var(--linha); border-radius: 8px; }
+  .sepOpcoes .linhaOpc { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-bottom: 8px; }
+  .sepOpcoes .linhaOpc .campo { margin: 0; width: 170px; }
+  .sepModos { display: inline-flex; border: 1px solid var(--linha); border-radius: 10px; padding: 0; overflow: hidden; background: #fff; }
+  .sepModos button { border-radius: 0; padding: 7px 16px; font-size: 13.5px; color: var(--txt); border-right: 1px solid var(--linha); flex: none; }
+  .sepModos button:last-child { border-right: 0; }
+  .sepModos button.ativo { background: var(--acento); color: #fff; box-shadow: none; }
+  .sepModos button:disabled { opacity: .4; cursor: default; }
+  #sepGrupos { margin: 10px 0 0; font-size: 13px; color: var(--sub); display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  #sepGrupos .lista { display: contents; }
+  .gchip { display: inline-flex; align-items: center; gap: 2px; border: 1px solid color-mix(in srgb, var(--c) 45%, #fff); background: color-mix(in srgb, var(--c) 10%, #fff); color: var(--c); border-radius: 8px; padding: 2px 4px 2px 8px; font-weight: 650; font-size: 12.5px; }
+  .gchip .gnome { border: 0; background: transparent; color: inherit; font: inherit; text-transform: uppercase; padding: 0; min-width: 3ch; field-sizing: content; }
+  .gchip .gnome:focus { outline: 1px dashed currentColor; outline-offset: 1px; }
+  .gchip .del { border: 0; background: none; color: inherit; cursor: pointer; font-size: 14px; padding: 0 3px; opacity: .6; } .gchip .del:hover { opacity: 1; }
+  .sepSemPar { margin: 10px 0 0; padding: 6px 10px; border-radius: 8px; background: #fff6e0; color: #6b4a00; font-size: 12.5px; }
+  #sepPavs { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13.5px; }
+  #sepPavs th { text-align: left; font-weight: 500; color: var(--sub); font-size: 12.5px; padding: 4px 6px; border-bottom: 1px solid var(--linha); }
+  #sepPavs td { padding: 5px 6px; border-bottom: 1px solid #eef0f3; }
+  #sepPavs .num { text-align: right; font-variant-numeric: tabular-nums; } #sepPavs .nm { font-weight: 600; }
+  #sepPavs input[type=checkbox] { accent-color: var(--acento); width: 16px; height: 16px; margin: 0; vertical-align: middle; }
+  #sepPavs .gr { display: none; } #sepPavs.comGrupo .gr { display: table-cell; }
+  #sepPavs tr.des td { color: var(--sub); } #sepPavs tr.des .nm { font-weight: 500; }
+  #sepPavs tr.recolhido td { background: #f6f7f9; color: var(--sub); font-size: 12.5px; } #sepPavs tr.recolhido .nm { font-weight: 500; }
+  #sepPavs tr.semPar td { background: #fff6e0; }
+  #sepPavs tr.fora .nm { font-weight: 500; font-style: italic; }
+  #sepPavs select.grupo { font: inherit; font-size: 12.5px; font-weight: 650; color: var(--c); border: 1px solid color-mix(in srgb, var(--c) 40%, #fff); background: color-mix(in srgb, var(--c) 8%, #fff); border-radius: 7px; padding: 2px 4px; text-transform: uppercase; }
+  #sepPavs .vazio { color: var(--sub); text-align: center; padding: 14px; }
+  #sepRodape { border-top: 1px solid var(--linha); padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  #sepVai { flex: 1 1 240px; margin: 0; font-size: 13px; color: var(--sub); } #sepVai b { color: var(--txt); }
+  #sepRodape .acoes { display: flex; gap: 8px; flex-wrap: wrap; }
+  #sepResultado { flex-basis: 100%; margin: 0; font-size: 13px; padding: 8px 10px; border-radius: 8px; background: #eef8f0; color: #1d5e2c; }
+  #sepResultado.erro { background: #fff3f3; color: #8a1116; }
+  .alerta { color: var(--acento); }
+  #sepDica { position: absolute; left: calc(var(--sepW) + 40px); top: 16px; padding: 8px 14px; font-size: 13.5px; color: var(--sub); }
+  #painelSeparar.semArquivo ~ #sepDica { display: none; }
+  @media (max-width: 1100px) { #sepDica, #sepClique { display: none !important; } }
+  @media (max-width: 1000px) { #funcoes a span { display: none; } #funcoes a { padding: 7px 12px; } }
+  @media (max-width: 760px) { .cartoes { grid-template-columns: 1fr; } }
+  /* celular: Unificar e Separar precisam do Chrome/Edge no computador (pastas e gravação) */
+  @media (pointer: coarse) and (max-width: 760px) { .cartao[data-funcao=unificar], .cartao[data-funcao=separar], #funcoes a[data-aba=unificar], #funcoes a[data-aba=separar] { display: none; } }
   /* ---------- programa: soltar, juntar, avisos ---------- */
   #soltar { position: fixed; inset: 0; z-index: 30; background: rgba(196, 22, 28, .08); border: 3px dashed var(--acento); display: grid; place-items: center; pointer-events: none; }
   #soltar div { background: #fff; border-radius: 14px; padding: 14px 22px; font-weight: 650; box-shadow: var(--sombra); }
@@ -308,6 +421,9 @@
 
 <header>
   <span id="logo"></span>
+  <div class="hxMarca"><b>HEXA-IFC</b><span>HEXA ENGENHARIA</span></div>
+  <nav id="funcoes" aria-label="Funções"><a href="#unificar" data-aba="unificar" title="Unificar IFC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h5l3 7-3 7H4"/><path d="M20 12h-8"/><path d="M17 9l3 3-3 3"/></svg><span>UNIFICAR IFC</span></a><a href="#visualizador" data-aba="visualizador" title="Visualizador"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg><span>VISUALIZADOR</span></a><a href="#separar" data-aba="separar" title="Separar IFC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="3" width="16" height="5" rx="1"/><rect x="4" y="10" width="16" height="4" rx="1"/><rect x="4" y="16" width="16" height="5" rx="1"/></svg><span>SEPARAR IFC</span></a></nav>
+  <button id="hxQr" class="ic" title="QR de um link" aria-label="QR de um link"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm11-2h2v2h-2v-2zm-3 0h2v3h-2v-3zm5 3h3v2h-3v-2zm-5 2h3v3h-3v-3zm5 1h2v2h-2v-2zm-2 2h2v2h-2v-2z"/></svg></button>
   <div class="tit"><div id="titulo">Visualizador IFC</div><div class="sub"><span id="empresa"></span><span id="data"></span></div></div>
   <button id="btnPublicar" class="ic" hidden title="Publicar / gerar QR (abre a ferramenta Juntar IFC + QR com estes arquivos)" aria-label="Publicar / gerar QR"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><path d="M14 20l6-6M15 14h5v5"/></svg></button>
   <button id="btnAbrir" class="ic" hidden title="Abrir arquivos IFC (ou arraste para a janela)" aria-label="Abrir arquivos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></button>
@@ -446,24 +562,67 @@
   <div id="quantCorpo"></div>
 </div></div>
 
-<div id="overlay"><div class="carga"><div id="status">Carregando…</div><div class="trilho"><div id="barra" class="indet"></div></div></div></div>
+<div id="cMedicao" class="card" hidden></div>
+<div id="avisoLeve" class="card" role="status" hidden></div>
+<div id="overlay"><div class="carga"><div id="status">Carregando…</div><div class="trilho"><div id="barra" class="indet"></div></div><button id="btCancelar" class="bt" type="button" hidden>Cancelar</button></div></div>
 
-<div id="boasvindas" hidden><div class="card">
+<div id="boasvindas" hidden><div class="inicio">
   <button class="x" id="bvFechar" hidden aria-label="Voltar ao modelo" title="Voltar ao modelo">×</button>
-  <div class="bvLogo" id="bvLogo"></div>
-  <h1>Visualizador IFC</h1>
-  <p class="bvSub">HEXA Engenharia</p>
-  <div id="areaSoltar" class="areaSoltar" role="button" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg><b>Arraste aqui os arquivos IFC</b><span>ou a pasta do projeto · .ifc, .ifczip, .zip · vários de uma vez juntam na hora</span></div>
-  <div class="linha"><button class="bt prim" id="btAbrirArq">Abrir arquivos</button><button class="bt" id="btAbrirPasta" hidden>Abrir pasta</button><button class="bt" id="btInstalar" hidden>Instalar programa</button></div>
+  <div class="ola"><h1>O que você quer fazer?</h1><p>Tudo roda no seu computador. Só o que você publicar vai para o seu Google Drive.</p></div>
+  <div class="cartoes">
+    <section class="cartao" data-funcao="unificar"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h5l3 7-3 7H4"/><path d="M20 12h-8"/><path d="M17 9l3 3-3 3"/></svg></div><h2>UNIFICAR IFC</h2>
+      <p>Junta os IFCs das disciplinas num unificado, salva na pasta do projeto, publica no Drive e gera o QR da prancha.</p>
+      <div class="areaSoltar" id="soltarUnificar" role="button" tabindex="0"><b>Arraste os arquivos aqui</b><span>pasta do projeto ou arquivos .ifc</span></div>
+      <button class="bt prim" id="btUnifPasta">Escolher pasta do projeto</button></section>
+    <section class="cartao" data-funcao="visualizador"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></div><h2>VISUALIZADOR</h2>
+      <p>Abre um ou vários IFCs na hora, já juntos por disciplina: navegar, medir, cortar, quantitativo e vistas.</p>
+      <div id="areaSoltar" class="areaSoltar" role="button" tabindex="0"><b>Arraste os arquivos aqui</b><span>.ifc, .ifczip, .zip ou a pasta</span></div>
+      <div class="linha"><button class="bt prim" id="btAbrirArq">Abrir arquivos</button><button class="bt" id="btAbrirPasta" hidden>Abrir pasta</button></div></section>
+    <section class="cartao" data-funcao="separar"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="3" width="16" height="5" rx="1"/><rect x="4" y="10" width="16" height="4" rx="1"/><rect x="4" y="16" width="16" height="5" rx="1"/></svg></div><h2>SEPARAR IFC</h2>
+      <p>Deixa IFCs pesados leves para vincular no Revit: limpa, simplifica e separa por pavimento ou grupos.</p>
+      <div class="areaSoltar" id="soltarSeparar" role="button" tabindex="0"><b>Arraste os arquivos aqui</b><span>arquitetura, estrutura, hidráulica…</span></div>
+      <button class="bt prim" id="btSepArq">Escolher arquivos</button></section>
+  </div>
   <input id="arquivo" type="file" accept=".ifc,.ifczip,.zip" multiple hidden>
   <div id="recentes" hidden><h2>Recentes</h2><ul></ul></div>
-  <p class="bvNota">Os arquivos são abertos só neste aparelho: nada é enviado para a internet.</p>
-  <a id="irFerramenta" class="bvLink" href="app/" hidden title="Juntar IFCs, salvar na pasta do projeto, publicar e gerar o QR">Juntar e publicar IFC · gerar QR <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+  <p class="bvNota">Os arquivos são abertos só neste computador: nada é enviado para a internet. <button class="bt" id="btInstalar" hidden>Instalar programa</button> <button id="btLimparCache" class="bvLimpar" type="button" hidden title="Apaga a geometria guardada para reabrir rápido (os arquivos não são apagados)">Limpar cache (<span></span>)</button> <span id="hxVersao"></span></p>
+  <p class="bvNota">Quem abre pelo QR da prancha vê só o modelo, sem esta tela.</p>
 </div></div>
+<div id="abaUnificar" class="aba" hidden><iframe id="ifUnificar" title="Unificar IFC"></iframe></div>
+<div id="abaSeparar" class="aba" hidden>
+  <section id="painelSeparar" class="card semArquivo" aria-label="Separar IFC">
+    <div class="sepTopo"><h2>Separar IFC</h2><p>Deixa IFCs pesados leves para vincular no Revit. O arquivo original nunca é alterado.</p></div>
+    <div id="sepAbas" role="tablist"><button id="sepMais" class="sepMais" type="button" title="Abrir mais arquivos">+ arquivo</button></div>
+    <div id="sepVazio" class="areaSoltar"><b>Arraste os IFCs aqui</b><span>arquitetura, estrutura, hidráulica… (.ifc, .ifczip)</span><button id="sepEscolher" class="bt prim" type="button">Escolher arquivos</button></div>
+    <div id="sepLendo" class="sepLendo" hidden></div>
+    <div id="sepCorpo" hidden>
+      <div class="sepSec"><h3>Limpeza (automática)</h3><button id="sepAjustar" class="link" type="button" aria-expanded="false">ajustar ▾</button></div>
+      <form id="sepOpcoes" class="sepOpcoes" hidden>
+        <p class="dica">Manter (não tirar):</p><div class="manter"></div>
+        <label class="campo">Remover também (classes, ex.: IfcFlowTerminal, IfcCovering.CEILING)<input name="remover" autocomplete="off"></label>
+        <label class="campo">Remover pelo nome da família (separe com |)<input name="removerNome" autocomplete="off"></label>
+        <div class="linhaOpc"><label class="campo">Tolerância das malhas (mm)<input name="tolerancia" type="number" min="0.5" max="100" step="0.5"></label>
+          <label class="opc"><input type="checkbox" name="semSimplificar"> Sem simplificar</label><label class="opc"><input type="checkbox" name="comPropriedades"> Com propriedades (Psets)</label></div>
+        <div class="linhaOpc"><span id="sepPasta" class="dica"></span><button id="sepOutraPasta" class="link" type="button">escolher outra pasta</button></div>
+        <button class="bt prim" type="submit">Aplicar</button>
+      </form>
+      <div id="sepLimpeza" class="sepLimpeza"></div>
+      <div class="sepSec"><h3>Como gerar</h3></div>
+      <div id="sepModos" class="segmento sepModos"><button type="button" data-modo="limpar">Só limpar</button><button type="button" data-modo="pavimento">Um por pavimento</button><button type="button" data-modo="grupos">Grupos</button></div>
+      <div id="sepGrupos" hidden>Grupos: <span class="lista"></span><button id="sepMaisGrupo" class="link" type="button">+ grupo</button></div>
+      <p id="sepSemPar" class="sepSemPar" hidden></p>
+      <table id="sepPavs"><thead><tr><th><input type="checkbox" id="sepTodos" aria-label="Marcar todos"></th><th>Nº</th><th>Pavimento</th><th class="num">Cota (m)</th><th class="num">Itens</th><th class="num">MB</th><th class="gr">Grupo</th></tr></thead><tbody></tbody></table>
+    </div>
+    <footer id="sepRodape" hidden><p id="sepVai"></p><div class="acoes"><button id="sepUsarOutros" class="bt" type="button" hidden>Usar nos outros arquivos</button><button id="sepGerar" class="bt prim" type="button">Gerar arquivos</button></div><p id="sepResultado" hidden></p></footer>
+  </section>
+  <div id="sepDica" class="card">Prévia do modelo <b>já limpo</b> · os pavimentos marcados aparecem coloridos</div>
+  <div id="sepClique" class="card">Clique num elemento para marcar ou desmarcar o pavimento dele</div>
+  <input type="file" id="sepArquivo" multiple accept=".ifc,.ifczip,.zip" hidden>
+</div>
 <div id="soltar" hidden><div>Solte para abrir</div></div>
 <div id="cJuntar" class="card" hidden><p class="t"></p><div class="linha"><button class="bt prim" data-op="juntar">Juntar com o que está aberto</button><button class="bt" data-op="novo">Abrir só estes</button><button class="bt" data-op="cancelar">Cancelar</button></div></div>
 <div id="avisoLocal" class="card" hidden><button class="x" aria-label="Fechar">×</button><ul></ul></div>
 
-<script type="module" src="app.js?v=2026-11-13.1300"></script>
+<script type="module" src="app.js?v=2026-11-19.2039"></script>
 </body>
 </html>

@@ -20,20 +20,50 @@ Ele foi feito para ser aberto pelo **QR code impresso nas pranchas** da HEXA. Vo
 
 ---
 
-## Usar como programa
+## Usar como programa (HEXA-IFC)
 
-Aberto sem link (só `https://hexa-engenharia.github.io/ifc/`), o visualizador funciona como um programa, no estilo do BIMcollab Zoom: você arrasta os arquivos e eles abrem, com todas as ferramentas abaixo. Nada é enviado para a internet nem salvo no Drive.
+Aberto sem link (só `https://hexa-engenharia.github.io/ifc/`), o site vira o **HEXA-IFC**: uma tela principal com três cartões e, no topo, a barra **UNIFICAR IFC | VISUALIZADOR | SEPARAR IFC**. Trocar de aba não perde nada (modelo aberto, lista do Unificar, arquivos do Separar). Nada é enviado para a internet nem salvo no Drive, a não ser ao publicar.
+
+- **Unificar IFC**: junta as disciplinas num IFC unificado, salva na pasta do projeto, publica no Drive e gera o QR, em passos que vão aparecendo (1 arquivos › 2 unificar › 3 publicar e QR). O QR de um link qualquer fica no ícone de QR do topo.
+- **Visualizador**: o que está descrito abaixo.
+- **Separar IFC**: veja [Separar IFC](#separar-ifc).
+- No celular aparece só o Visualizador (Unificar e Separar precisam do Chrome/Edge no computador).
 
 - **Arrastar** para a janela: um ou vários `.ifc`, um `.ifczip`/`.zip` (com um ou vários IFCs dentro) ou uma **pasta do projeto** inteira. Vários arquivos são juntados na hora, já separados por disciplina (o nome da disciplina vem da pasta ou do código no nome: `04-FORÇA`, `FOR`, `AUT`…).
 - **Pasta do projeto**: entram só os IFCs das disciplinas, na revisão mais nova. Ficam de fora as pastas `OBSOLETO`, `OLD` e `BACKUP`, a pasta do IFC unificado e arquivos `UNIFICADO`.
 - **Com um modelo aberto**, arrastar mais arquivos pergunta: **Juntar com o que está aberto** ou **Abrir só estes**. Ao juntar, uma revisão nova troca a velha da mesma disciplina (aparece "FORÇA: R00 → R01").
 - **Botões**: **Abrir arquivos**, **Abrir pasta** (Chrome e Edge no computador) e, no topo, o ícone de pasta volta para a tela inicial.
 - **Recentes** (Chrome e Edge no computador): os últimos 8 arquivos ou pastas abertos. Ao clicar, o navegador pede permissão para ler de novo; se o arquivo mudou de lugar, ele sai da lista.
-- **Instalar**: o botão **Instalar** da tela inicial (ou o ícone na barra de endereço do Chrome/Edge) cria o **HEXA Visualizador IFC** no menu Iniciar e na área de trabalho. Depois de instalado ele abre em janela própria, funciona **sem internet** e aparece em **Abrir com** ao clicar com o botão direito num `.ifc` (dá para abrir vários de uma vez).
-- **Publicar / gerar QR** (ícone de QR no topo, Chrome e Edge no computador): abre a ferramenta Juntar IFC + QR numa aba nova já com os arquivos abertos e, se você abriu uma pasta, com ela como pasta do projeto. Lá é só Juntar › Salvar na pasta › Publicar › QR. Se nada abrir, permita pop-ups para este site.
-- **Ir para a ferramenta**: na tela inicial, o link **Juntar e publicar IFC · gerar QR** abre a ferramenta; lá, **Visualizador** (no topo) volta para cá.
+- **Instalar**: o botão **Instalar** da tela inicial (ou o ícone na barra de endereço do Chrome/Edge) cria o **HEXA-IFC** no menu Iniciar e na área de trabalho. Depois de instalado ele abre em janela própria, funciona **sem internet** e aparece em **Abrir com** ao clicar com o botão direito num `.ifc` (dá para abrir vários de uma vez).
+- **Publicar / gerar QR** (ícone de QR no topo, Chrome e Edge no computador): leva os arquivos abertos (e a pasta, se você abriu uma pasta) para a aba **Unificar IFC**. Lá é só Unificar › Salvar na pasta › Publicar › QR.
+- **Abrir de novo é rápido**: a geometria de um arquivo já aberto fica guardada no navegador; reabrir o mesmo arquivo (mesmo nome, tamanho e data) pula a parte demorada. **Limpar cache** na tela principal apaga essa cópia.
 - **Minhas vistas** ficam guardadas pelo nome do modelo aberto.
 - Num link de QR (`?d=`), arrastar um arquivo do aparelho troca para ele; as vistas do projeto e o QR daquele link saem da tela.
+
+---
+
+## Separar IFC
+
+Deixa IFCs pesados (arquitetura, estrutura, hidráulica…) leves para vincular no Revit. É o `dividir_ifc.py` (o .bat) dentro do HEXA-IFC, com o mesmo resultado. **O arquivo original nunca é alterado.** Chrome ou Edge no computador.
+
+1. Arraste os IFCs no cartão **Separar IFC** (ou na própria aba). Cada arquivo vira uma aba; **+ arquivo** acrescenta outros.
+2. **Limpeza (automática)**: mostra o que saiu (mobiliário, louças, perfis de esquadria, montantes de fachada…), o tamanho antes → depois e quantas peças tiveram a malha simplificada. **ajustar ▾** abre as opções (manter grupos ou classes, remover classes ou por nome, tolerância, sem simplificar, com propriedades, pasta de saída).
+3. **Como gerar**: **Só limpar** (um arquivo `_LIMPO`), **Um por pavimento** (`_01_TERREO`, `_02_…`) ou **Grupos** (nome livre e cor por grupo, "+ grupo"; cada pavimento escolhe o seu grupo). As caixinhas valem em todos os modos: pavimento desmarcado fica de fora. Pavimentos seguidos desmarcados de nome parecido (TIPO 2 … TIPO 24) aparecem numa linha só, que se abre.
+4. **Usar nos outros N arquivos** copia o modo, os grupos e as marcações para os outros arquivos, casando os pavimentos pela cota. O que não casar fica listado em amarelo para escolher à mão.
+5. À direita, a **prévia 3D** do modelo já limpo: pavimentos marcados na cor do grupo, os outros apagados. Clicar num elemento marca ou desmarca o pavimento dele. Ao voltar para o Visualizador, o modelo que estava aberto volta como estava.
+6. **Gerar arquivos**: na primeira vez o navegador pergunta a pasta (abre ao lado do arquivo); os arquivos vão para **`IFC_DIVIDIDO`** dentro dela, com o `_RELATORIO.txt` (o que saiu, por classe, conferindo que nada sumiu). Se um arquivo de saída estiver aberto no Revit, ele avisa qual e grava os outros.
+
+---
+
+## Modelos grandes (Abrir leve)
+
+Arquivos IFC acima de **100 MB** abrem **leves**: o visualizador deixa de fora, por enquanto, o que pesa e quase nunca importa para instalações — perfis e ferragens de esquadria, montantes de fachada, louças e metais, mobiliário, eletrodomésticos, acabamentos, vegetação, pessoas e veículos (as mesmas regras do *Separar IFC*).
+
+- Um aviso no topo diz o que ficou de fora. Clique numa etiqueta (por exemplo **Louças e metais**) para carregar só aquele grupo, ou em **Mostrar tudo** para carregar o resto. Não precisa reabrir: o que você já ligou, desligou, isolou ou deixou em raio-X continua igual.
+- **Nada some do arquivo**: o IFC não é alterado. É só o que vai para a tela.
+- Para abrir sempre completo, acrescente `&completo` ao link (ou `?completo` na página do programa).
+- Enquanto você gira ou dá zoom num modelo muito pesado, o visualizador desenha só as peças maiores e em resolução um pouco menor; ao parar, tudo volta na hora.
+- No computador com placa de vídeo dedicada (NVIDIA/AMD), configure o Windows para usar essa placa no Chrome/Edge: **Configurações › Sistema › Tela › Gráficos** › escolha o navegador › **Alto desempenho**.
 
 ---
 
@@ -181,11 +211,12 @@ Não é preciso instalar nada: basta abrir o link no **Chrome** ou no **Edge** d
 
 ### Atualizar este site
 
-1. Substitua **`index.html`**, **`app.js`**, **`juntar.js`** e **`sw.js`** neste repositório pela versão nova (sempre os quatro juntos). Para atualizar a ferramenta Juntar IFC + QR, substitua a pasta **`app/`** inteira.
-   - `web-ifc.wasm` só precisa ser trocado quando a versão do web-ifc mudar; `manifest.webmanifest` e a pasta `icons/`, só quando mudarem.
+1. Substitua **`index.html`**, **`app.js`**, **`juntar.js`**, **`geometria.js`**, **`separar.js`**, **`sw.js`** e **`manifest.webmanifest`** neste repositório pela versão nova (sempre todos juntos) e a pasta **`app/`** inteira (o Unificar).
+   - **Para testar antes de trocar o site**: suba a pasta **`teste/`** (e a pasta `app/`) e abra `https://hexa-engenharia.github.io/ifc/teste/` (mesmo programa, sem instalar, usando o `config.js` do site). Quando estiver bom, troque os arquivos principais.
+   - `web-ifc.wasm` só precisa ser trocado quando a versão do web-ifc mudar; a pasta `icons/`, só quando mudar.
    - **Nunca substitua o `config.js`**, que tem a chave de acesso ao Google Drive.
 2. Aguarde 1 a 2 minutos para o GitHub Pages publicar.
-3. Para conferir, abra o site e passe o mouse sobre a logo. A versão aparece no formato `AAAA-MM-DD.HHMM`. O `app.js` é carregado com a versão no endereço, então o navegador não reaproveita o app antigo do cache. Quem instalou o programa recebe a versão nova na próxima vez que abrir com internet.
+3. Para conferir, abra o site: a versão aparece no rodapé da tela principal, no formato `AAAA-MM-DD.HHMM`. O `app.js` é carregado com a versão no endereço, então o navegador não reaproveita o app antigo do cache. Quem instalou o programa recebe a versão nova na próxima vez que abrir com internet.
 
 ### Arquivos
 
@@ -194,11 +225,14 @@ Não é preciso instalar nada: basta abrir o link no **Chrome** ou no **Edge** d
 | `index.html` | Página do visualizador (layout e estilos). |
 | `app.js` | O visualizador. É gerado pelo build a partir do código-fonte, então não edite este arquivo diretamente. |
 | `juntar.js` | Junta vários IFCs no navegador quando o visualizador é usado como programa. Gerado pelo build. |
+| `geometria.js` | Gera a geometria em segundo plano, dividida entre os núcleos do processador. Gerado pelo build. |
+| `separar.js` | Motor do Separar IFC (limpar, simplificar malhas, dividir por pavimento, relatório). Gerado pelo build. |
 | `sw.js` | Faz o programa instalado abrir sem internet. Gerado pelo build. |
-| `manifest.webmanifest`, `icons/` | Nome, ícone e tipos de arquivo do programa instalado (HEXA Visualizador IFC). |
+| `manifest.webmanifest`, `icons/` | Nome, ícone e tipos de arquivo do programa instalado (HEXA-IFC). |
 | `web-ifc.wasm` | Leitor de IFC (WebAssembly). |
 | `config.js` | Chave de API do Google Drive, restrita à Drive API e ao domínio deste site. |
-| `app/` | Ferramenta Juntar IFC + QR (juntar, publicar no Drive e gerar o QR). Gerada pelo build: não edite à mão. |
+| `app/` | Unificar IFC (juntar, publicar no Drive e gerar o QR), usado dentro do HEXA-IFC. Gerado pelo build: não edite à mão. |
+| `teste/` | Versão de teste do visualizador (opcional), para conferir uma atualização antes de trocar o site. |
 
 ### Parâmetros do link
 
@@ -206,6 +240,8 @@ Não é preciso instalar nada: basta abrir o link no **Chrome** ou no **Edge** d
 |---|---|
 | `?d=<ID>` | Abre o arquivo `.ifc`/`.ifczip` com esse ID no Google Drive (compartilhado como "qualquer pessoa com o link"). |
 | `?u=<URL>` | Abre um `.ifc`/`.ifczip` de um endereço público (o servidor precisa permitir CORS). |
+| `&completo` | Abre o modelo completo mesmo acima de 100 MB (sem o Abrir leve). |
+| `&medir` | Mostra no canto o tempo de cada etapa da abertura e quantos triângulos o modelo tem (para diagnóstico). |
 
 ### Login do Google (ferramenta e vistas do projeto)
 
